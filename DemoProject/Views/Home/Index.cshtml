@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<body class="body bg-primary">
+<div class="welcome-section">
+    <h1>Gameplay</h1>
+</div>
+<div>
+        <form id="schoolCodeForm" method="post" action="Home/SubmitCode" class="school-code-form">
+        <div class="form-group">
+            <label for="schoolCode" class="form-label">Enter School Code:</label>
+            <input type="text" class="form-control" id="schoolCode" name="schoolCode" required />
+        </div>
+        <button type="button" id="submitButton" class="btn btn-primary">Enter</button>
+    </form>
+</div>
+
+    <script>
+        document.getElementById("submitButton").addEventListener("click", function () {
+            var schoolCode = document.getElementById("schoolCode").value;
+
+            if (schoolCode.trim() === "") {
+                alert("Please enter a school code.");
+            } else {
+                document.getElementById("schoolCodeForm").submit();
+            }
+        });
+    </script>
+</body>

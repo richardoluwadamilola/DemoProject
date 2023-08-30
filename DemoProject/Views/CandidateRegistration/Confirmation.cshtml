@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Confirmation";
+}
+<body class="body bg-secondary">
+    <div class="text-center">
+        <h1 class="display-4">Game</h1>
+    </div>
+    <div class="container">
+        <p><strong>@Model.FullName</strong></p>
+        <p><strong>@Model.ID</strong></p>
+        <p>Category: @Model.Category</p>
+    </div>
+    <div class="text-center mt-4">
+        <a href="/Register/RegisterRequest" class="link-new-registration">New Registration</a>
+    </div>
+</body>
