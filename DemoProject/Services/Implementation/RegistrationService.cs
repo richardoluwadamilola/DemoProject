@@ -34,22 +34,27 @@ namespace DemoProject.Services.Implementation
 
             if (schoolCode == null)
             {
-                throw new InvalidOperationException("The entered school code does not exist.");
+                throw new Exception("The entered school code does not exist.");
             }
 
             return schoolCode;
+        }
+
+        public School GetSchoolByCode(string schoolCode)
+        {
+            return _context.Schools.FirstOrDefault(s => s.SchoolCode == schoolCode);
         }
 
         public Candidate RegisterCandidate(RegistrationViewModel candidateViewModel, int schoolId)
         {
             string insertCandidateQuery = $"INSERT INTO Candidates (FirstName, MiddleName, LastName, DOB, Gender, Category, SchoolId) VALUES " +
                                           $"('{candidateViewModel.FirstName}', '{candidateViewModel.MiddleName}', '{candidateViewModel.Surname}', " +
-                                          $"'{DateTime.Parse(candidateViewModel.DateOfBirth):yyyy-MM-dd}', '{candidateViewModel.Gender}', " +
+                                          $"'{candidateViewModel.DateOfBirth:yyyy-MM-dd}', '{candidateViewModel.Gender}', " +
                                           $"'{candidateViewModel.Category}', {schoolId})";
 
             using var command = _context.Database.GetDbConnection().CreateCommand();
             command.CommandText = insertCandidateQuery;
-            command.ExecuteNonQuery();
+            //command.ExecuteNonQuery();
 
             return GetLatestCandidateBySchoolId(schoolId);
         }

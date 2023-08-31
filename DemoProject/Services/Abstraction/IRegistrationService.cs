@@ -8,7 +8,7 @@ namespace DemoProject.Services.Abstraction
         School SubmitCode(SchoolViewModel schoolViewModel);
         Candidate RegisterCandidate(RegistrationViewModel candidateViewModel, int schoolId);
         CompletedViewModel GenerateCompletedViewModel(int candidateId);
-
+        School GetSchoolByCode(string schoolCode);
         string GenerateCandidateID(int candidateId);
     }
 }

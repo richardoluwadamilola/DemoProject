@@ -19,36 +19,35 @@ namespace DemoProject.Controllers
         [HttpGet]
         public IActionResult Index(int schoolId)
         {
-            var registrationViewModel = new RegistrationViewModel();
-            // Pass the schoolId to the view
-            ViewBag.SchoolId = schoolId;
+            var registrationViewModel = new RegistrationViewModel
+            {
+                // Pass the schoolId to the view
+                SchoolId = schoolId
+            };
             return View(registrationViewModel);
         }
 
         [HttpPost]
-        public IActionResult RegisterCandidate(RegistrationViewModel candidateViewModel, int schoolId)
+        public IActionResult RegisterCandidate(RegistrationViewModel candidateViewModel)
         {
             if (ModelState.IsValid)
             {
-                var candidate = _registrationService.RegisterCandidate(candidateViewModel, schoolId);
+                // Retrieve the school based on the entered school code
+                School school = _registrationService.GetSchoolByCode(candidateViewModel.SchoolCode);
 
-                // Generate the unique candidate ID
-                string candidateID = _registrationService.GenerateCandidateID(candidate.CandidateId);
-
-                var completedViewModel = new CompletedViewModel
+                if (school == null)
                 {
-                    FullName = $"{candidate.FirstName} {candidate.LastName}",
-                    ID = candidateID,
-                    Category = candidate.Category
-                };
+                    ModelState.AddModelError("SchoolCode", "School with the provided code does not exist.");
+                    return View("Index", candidateViewModel);
+                }
 
-                // Display the confirmation page
-                return View("Confirmation", "CandidateRegistration");
+                // Now you have the school ID, use it to associate the candidate
+                Candidate registeredCandidate = _registrationService.RegisterCandidate(candidateViewModel, school.SchoolId);
+                
+                
             }
-
-            // If ModelState is not valid, return back to the registration page
-            ViewBag.SchoolId = schoolId; // Pass the schoolId again to the view
-            return View("RegisterCandidates", candidateViewModel);
+            // Display the confirmation page
+            return View("Confirmation", "CandidateRegistration");
         }
 
         //public IActionResult Confirmation(int candidateId)

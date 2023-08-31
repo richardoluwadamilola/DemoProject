@@ -12,7 +12,6 @@ namespace DemoProject.Models
         public string? Gender { get; set; }
         public DateTime DOB { get; set; }
         public string? Category { get; set; }
-        public string? GameCode { get; set; }
         public string? PassportExtension { get; set; }
         public byte[]? Passport { get; set; }
 
