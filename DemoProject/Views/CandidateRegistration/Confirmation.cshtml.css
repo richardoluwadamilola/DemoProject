@@ -1,0 +1,42 @@
+﻿.container {
+    width: 375px;
+    top: 278px;
+    padding: 10px 16px 10px 16px;
+    text-align: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+}
+
+.body {
+    font-family: sans-serif;
+    font-size: 1rem;
+    position: absolute;
+    width: 152px;
+    height: 78px;
+    left: calc(50% - 152px/2 - 0.5px);
+    top: 77px;
+    background: #007bff;
+    align-content: center;
+}
+
+.link-new-registration {
+    text-align: center;
+    width: 201px;
+    border-radius: 8px;
+    border: 2px;
+    background: #FFFFFF;
+    margin-top: 20px;
+}
+
+.text-center {
+    text-align: center;
+    font-family: 'Grandstander';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 32px;
+    letter-spacing: -0.165px;
+    color: #FFFFFF;
+    margin-top: 50px;
+}

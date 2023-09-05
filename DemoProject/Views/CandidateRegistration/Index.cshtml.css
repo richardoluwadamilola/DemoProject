@@ -1,0 +1,56 @@
+﻿.text-center {
+    text-align: center;
+    font-family: 'Grandstander';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 32px;
+    letter-spacing: -0.165px;
+    color: #FFFFFF;
+    margin-top: 50px; /* Adjust the top margin to move it down */
+}
+
+.container {
+    padding: 32px 16px 16px 16px;
+    border-radius: 16px 16px 0px 0px;
+    margin: 20px auto;
+    gap: 17px;
+    background: #FFFFFF;
+}
+
+.body {
+    font-family: sans-serif;
+    font-size: 1rem;
+    position: absolute;
+    width: 100%; /* Adjust to fill the page */
+    height: auto; /* Allow height to adjust based on content */
+    left: 0;
+    top: 127px; /* Adjust the top value to move gameplay down */
+    background: #1086DC;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+/* Style for the button container */
+.button-container {
+    text-align: center;
+    margin-top: 20px; /* Add margin to move it down */
+}
+
+/* Add this CSS to center the "Next" button within the form */
+.form-group.button-group {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Blue button color */
+    color: #ffffff; /* White text color */
+    border: none;
+    border-radius: 3px;
+    font-size: 1em;
+    cursor: pointer;
+}
+

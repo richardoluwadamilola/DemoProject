@@ -1,14 +1,24 @@
-﻿@{
+﻿@model DemoProject.Models.ViewModels.CompletedViewModel
+
+@{
     ViewData["Title"] = "Confirmation";
 }
-<body class="body bg-secondary">
+<body class="body bg-primary">
     <div class="text-center">
-        <h1 class="display-4">Game</h1>
+        <h1 class="display-4">Gameplay</h1>
     </div>
+
+    @if (!string.IsNullOrEmpty(Model.PassportBase64))
+    {
+        <div class="container">
+            <img src="data:image/jpeg;base64,@Model.PassportBase64" alt="Passport">
+        </div>
+    }
+
     <div class="container">
         <p><strong>@Model.FullName</strong></p>
         <p><strong>@Model.ID</strong></p>
-        <p>Category: @Model.Category</p>
+        <p><strong>@Model.Category</strong></p>
     </div>
     <div class="text-center mt-4">
         <a href="/Register/RegisterRequest" class="link-new-registration">New Registration</a>

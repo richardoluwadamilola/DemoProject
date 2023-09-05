@@ -30,17 +30,15 @@ namespace DemoProject.Controllers
             try
             {
                 var school = _registrationService.SubmitCode(schoolViewModel);
+                return RedirectToAction("Index", "CandidateRegistration", school);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("SchoolCode", ex.Message);
-                return View("Index", schoolViewModel);
             }
 
-            // Redirect to candidate registration page
-            return RedirectToAction("Index", "CandidateRegistration");
+            return View("Index", schoolViewModel);
         }
-
 
     }
 }

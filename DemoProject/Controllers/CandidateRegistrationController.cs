@@ -4,6 +4,8 @@ using DemoProject.Services.Abstraction;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+
 
 namespace DemoProject.Controllers
 {
@@ -17,14 +19,10 @@ namespace DemoProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int schoolId)
+        public IActionResult Index(School school)
         {
-            var registrationViewModel = new RegistrationViewModel
-            {
-                // Pass the schoolId to the view
-                SchoolId = schoolId
-            };
-            return View(registrationViewModel);
+            // Pass the schoolId to the view
+            return View(school);
         }
 
         [HttpPost]
@@ -42,19 +40,26 @@ namespace DemoProject.Controllers
                 }
 
                 // Now you have the school ID, use it to associate the candidate
-                Candidate registeredCandidate = _registrationService.RegisterCandidate(candidateViewModel, school.SchoolId);
-                
-                
+                CompletedViewModel registeredCandidate = _registrationService.RegisterCandidate(candidateViewModel, school.SchoolId);
+
+                // Convert the passport image to Base64 and assign it to the view model
+                if (candidateViewModel.Passport != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        candidateViewModel.Passport.CopyTo(memoryStream);
+                        var bytes = memoryStream.ToArray();
+                        var base64 = Convert.ToBase64String(bytes);
+                        registeredCandidate.PassportBase64 = base64;
+                    }
+                }
+
+                return View("Confirmation", registeredCandidate);
             }
-            // Display the confirmation page
-            return View("Confirmation", "CandidateRegistration");
+
+            return View("Index");
         }
 
-        //public IActionResult Confirmation(int candidateId)
-        //{
-        //    var completedViewModel = _registrationService.GenerateCompletedViewModel(candidateId);
-        //    return View(completedViewModel);
-        //}
     }
 
 }
