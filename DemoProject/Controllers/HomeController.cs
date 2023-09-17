@@ -35,6 +35,7 @@ namespace DemoProject.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("SchoolCode", ex.Message);
+                ViewData["ErrorMessage"] = ex.Message;
             }
 
             return View("Index", schoolViewModel);

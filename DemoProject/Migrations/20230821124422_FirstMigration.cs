@@ -12,7 +12,7 @@ namespace DemoProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Schools",
+                name: "Schools", 
                 columns: table => new
                 {
                     SchoolId = table.Column<int>(type: "int", nullable: false)

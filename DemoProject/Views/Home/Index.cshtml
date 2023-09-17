@@ -25,5 +25,11 @@
                 document.getElementById("schoolCodeForm").submit();
             }
         });
+
+        // Add this script to show the alert
+        var errorMessage = "@ViewData["ErrorMessage"]";
+        if (errorMessage) {
+            alert(errorMessage);
+            }
     </script>
 </body>

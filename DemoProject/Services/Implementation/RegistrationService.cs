@@ -41,11 +41,13 @@ namespace DemoProject.Services.Implementation
 
         public School SubmitCode(SchoolViewModel schoolViewModel)
         {
-            var schoolCode = _context.Schools.FirstOrDefault(c => c.SchoolCode == schoolViewModel.SchoolCode);
+            var schoolCode = _context.Schools
+                .FromSqlRaw("SELECT * FROM Schools WHERE SchoolCode = @schoolCode", new SqlParameter("schoolCode", schoolViewModel.SchoolCode))
+                .FirstOrDefault();
 
             if (schoolCode == null)
             {
-                throw new Exception("The entered school code does not exist.");
+                throw new Exception("The school code entered does not exist.");
             }
 
             return schoolCode;
@@ -124,7 +126,14 @@ namespace DemoProject.Services.Implementation
 
         private Candidate GetCandidateById(int candidateId)
         {
-            return _context.Candidates.FirstOrDefault(c => c.CandidateId == candidateId);
+            string sqlQuery = "SELECT * FROM Candidates WHERE CandidateId = @CandidateId";
+            var candidateIdParam = new SqlParameter("@CandidateId", candidateId);
+
+            var candidate = _context.Candidates
+                .FromSqlRaw(sqlQuery, candidateIdParam)
+                .FirstOrDefault();
+            return candidate;
+
         }
 
         public string GenerateCandidateID(int candidateId)
@@ -134,5 +143,20 @@ namespace DemoProject.Services.Implementation
             return uniqueID;
         }
 
+        public List<OnboardedCandidatesViewModel> GetOnboardedCandidates(string schoolCode)
+        {
+            var candidates = _context.Candidates
+                .Where(c => c.School.SchoolCode == schoolCode)
+                .Select(c => new OnboardedCandidatesViewModel
+                {
+                    CandidateId = c.CandidateId,
+                    FirstName = c.FirstName,
+                    LastName = c.LastName,
+                    SchoolCode = c.School.SchoolCode,
+                })
+                 .ToList();
+
+            return candidates;
+        }
     }
 }
