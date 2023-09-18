@@ -2,6 +2,7 @@
 {
     public class CompletedViewModel
     {
+        public string? SchoolCode { get; set; }
         public string? FullName { get; set; }
         public string? ID { get; set; }
         public string? Category { get; set; }

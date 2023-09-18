@@ -20,7 +20,23 @@
         <p><strong>@Model.ID</strong></p>
         <p><strong>@Model.Category</strong></p>
     </div>
-    <div class="text-center mt-4">
-        <a href="@Url.Action("Index", "CandidateRegistration")" class="link-new-registration">New Registration</a>
     </div>
+    <div class="text-center mt-4">
+        <a href="javascript:void(0);" onclick="navigateToNewRegistration('@Model.SchoolCode')" class="link-new-registration">New Registration</a>
+    </div>
+
+    @section Scripts {
+        <script>
+            // Function to navigate to the new registration page
+            function navigateToNewRegistration(schoolCode) {
+                console.log("Clicked on 'New Registration'");
+             //log the schoolcode
+                console.log("School Code:", schoolCode);
+                // Construct the URL with the schoolCode parameter
+                var url = "@Url.Action("Index", "CandidateRegistration")?schoolCode=" + schoolCode;
+                // Redirect to the new registration page
+                window.location.href = url;
+            }
+        </script>
+    }
 </body>

@@ -6,7 +6,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-
 namespace DemoProject.Controllers
 {
     public class CandidateRegistrationController : Controller
@@ -19,9 +18,17 @@ namespace DemoProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(School school)
+        public IActionResult Index(string schoolCode)
         {
-            // Pass the schoolId to the view
+            // Get school based on provided school code
+            School school = _registrationService.GetSchoolByCode(schoolCode);
+
+            if (school == null)
+            {
+                return RedirectToAction("SchoolCodeNotFound");
+            }
+
+            // Pass the school ID to the view
             return View(school);
         }
 
@@ -53,6 +60,7 @@ namespace DemoProject.Controllers
                         registeredCandidate.PassportBase64 = base64;
                     }
                 }
+                registeredCandidate.SchoolCode = school.SchoolCode;
 
                 return View("Confirmation", registeredCandidate);
             }
@@ -60,7 +68,10 @@ namespace DemoProject.Controllers
             return View("Index");
         }
 
+        [HttpGet]
+        public IActionResult SchoolCodeNotFound()
+        {
+            return View();
+        }
     }
-
 }
-
