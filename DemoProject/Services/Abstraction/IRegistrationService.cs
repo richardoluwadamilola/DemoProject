@@ -9,6 +9,6 @@ namespace DemoProject.Services.Abstraction
         CompletedViewModel RegisterCandidate(RegistrationViewModel candidateViewModel, int schoolId);
         School GetSchoolByCode(string schoolCode);
         string GenerateCandidateID(int candidateId);
-        List<OnboardedCandidatesViewModel> GetOnboardedCandidates(string schoolCode);
+        List<OnboardedCandidatesViewModel> GetOnboardedCandidates(string schoolCode, string schoolName);
     }
 }

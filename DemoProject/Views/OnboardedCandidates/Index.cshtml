@@ -1,6 +1,6 @@
 ﻿@using DemoProject.Models.ViewModels
 
-@model Dictionary<string, List<OnboardedCandidatesViewModel>>
+@model Dictionary<string, Dictionary<string, List<OnboardedCandidatesViewModel>>>
 
 <!DOCTYPE html>
 <html>
@@ -8,30 +8,40 @@
     <title>Onboarded Candidates</title>
 </head>
 <body>
-    <h1>Onboarded Candidates</h1>
     @foreach (var schoolCode in Model.Keys)
+{
+    foreach (var schoolName in Model[schoolCode].Keys)
     {
+        <h2>School Code: @schoolCode</h2>
+        <h3>School Name: @schoolName</h3>
         <table border="1">
             <thead>
                 <tr>
+                    <th>Serial Number</th>
                     <th>Candidate ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>School Code</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var candidate in Model[schoolCode])
+                @{
+                    var serialNumber = 1; // Initialize the serial number
+                }
+                @foreach (var candidate in Model[schoolCode][schoolName])
                 {
                     <tr>
+                        <td>@serialNumber</td>
                         <td>@candidate.CandidateId</td>
                         <td>@candidate.FirstName</td>
                         <td>@candidate.LastName</td>
-                        <td>@candidate.SchoolCode</td>
                     </tr>
+                    @{
+                        serialNumber++; // Increment the serial number for the next row
+                    }
                 }
             </tbody>
         </table>
     }
+}
 </body>
 </html>

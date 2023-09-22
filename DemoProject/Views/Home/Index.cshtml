@@ -18,18 +18,21 @@
     <script>
         document.getElementById("submitButton").addEventListener("click", function () {
             var schoolCode = document.getElementById("schoolCode").value;
+            var registeredStudents = 10; // Replace with the actual count
 
             if (schoolCode.trim() === "") {
                 alert("Please enter a school code.");
             } else {
                 document.getElementById("schoolCodeForm").submit();
             }
+
         });
 
         // Add this script to show the alert
         var errorMessage = "@ViewData["ErrorMessage"]";
         if (errorMessage) {
             alert(errorMessage);
+            window.location.href = "@Url.Action("Index", "Home")";
             }
     </script>
 </body>
