@@ -45,7 +45,7 @@ namespace DemoProject.Services.Implementation
                 .FromSqlRaw("SELECT * FROM Schools WHERE SchoolCode = @schoolCode", new SqlParameter("schoolCode", schoolViewModel.SchoolCode))
                 .FirstOrDefault();
 
-            string sqlcode = "SELECT COUNT(*) FROM Schools s INNER JOIN Candidates c on s.SchoolId = c.SchoolId WHERE SchoolCode = @schoolCode";
+            string sqlQuery = "SELECT COUNT(*) FROM Schools s INNER JOIN Candidates c on s.SchoolId = c.SchoolId WHERE SchoolCode = @schoolCode";
             var registeredStudents = (from s in _context.Schools
                                       where s.SchoolCode == schoolCode.SchoolCode
                                       join c in _context.Candidates
