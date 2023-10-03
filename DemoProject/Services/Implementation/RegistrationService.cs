@@ -45,6 +45,11 @@ namespace DemoProject.Services.Implementation
                 .FromSqlRaw("SELECT * FROM Schools WHERE SchoolCode = @schoolCode", new SqlParameter("schoolCode", schoolViewModel.SchoolCode))
                 .FirstOrDefault();
 
+            if (schoolCode == null)
+            {
+                throw new Exception("The school code entered does not exist.");
+            }
+
             string sqlQuery = "SELECT COUNT(*) FROM Schools s INNER JOIN Candidates c on s.SchoolId = c.SchoolId WHERE SchoolCode = @schoolCode";
             var registeredStudents = (from s in _context.Schools
                                       where s.SchoolCode == schoolCode.SchoolCode
@@ -55,11 +60,6 @@ namespace DemoProject.Services.Implementation
             {
                 // Handle the case where the limit is reached by returning a custom error message
                 throw new Exception("The maximum limit of 10 students for this school has been reached.");
-            }
-
-            if (schoolCode == null)
-            {
-                throw new Exception("The school code entered does not exist.");
             }
 
             return schoolCode;
