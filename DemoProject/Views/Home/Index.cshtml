@@ -15,6 +15,11 @@
     </form>
 </div>
 
+    <div class="right-button">
+        <!-- Add a button to navigate to OnboardedCandidates index page -->
+        <a href="@Url.Action("Index", "OnboardedCandidates")" class="btn btn-primary">View Onboarded Candidates</a>
+    </div>
+
     <script>
         document.getElementById("submitButton").addEventListener("click", function () {
             var schoolCode = document.getElementById("schoolCode").value;
