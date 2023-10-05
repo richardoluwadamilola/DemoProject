@@ -8,4 +8,6 @@
         public string? SchoolCode { get; set; }
         public string? SchoolName { get; set; }
     }
+
+
 }

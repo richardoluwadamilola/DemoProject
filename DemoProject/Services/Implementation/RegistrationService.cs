@@ -23,32 +23,29 @@ namespace DemoProject.Services.Implementation
 
         private CompletedViewModel GetLatestCandidateBySchoolId(RegistrationViewModel regVM)
         {
-            string sqlQuery = "SELECT TOP 1 * FROM Candidates " +
-                  "WHERE FirstName = @FirstName AND LastName = @LastName AND MiddleName = @MiddleName AND DOB = @DateOfBirth";
-
-            var candidate = _context.Candidates
-                .FromSqlRaw(sqlQuery,
-                    new SqlParameter("@FirstName", regVM.FirstName),
-                    new SqlParameter("@LastName", regVM.Surname),
-                    new SqlParameter("@MiddleName", regVM.MiddleName),
-                    new SqlParameter("@DateOfBirth", regVM.DateOfBirth))
-                .FirstOrDefault();
+            var candidate = _context.Candidates.FromSql(
+                $"SELECT TOP 1 * FROM Candidates WHERE FirstName = {regVM.FirstName} AND LastName = {regVM.Surname} AND MiddleName = {regVM.MiddleName} AND DOB = {regVM.DateOfBirth}"
+           ).FirstOrDefault();
 
             return GenerateCompletedViewModel(candidate);
-
-
         }
+
 
         public School SubmitCode(SchoolViewModel schoolViewModel)
         {
-            var schoolCode = _context.Schools
-                .FromSqlRaw("SELECT * FROM Schools WHERE SchoolCode = @schoolCode", new SqlParameter("schoolCode", schoolViewModel.SchoolCode))
+            //var schoolCodeParam = new SqlParameter("@schoolCode", schoolCode);
+            var schoolCode = _context.Schools.FromSql(
+                $"SELECT * FROM Schools WHERE SchoolCode = {schoolViewModel.SchoolCode}")
                 .FirstOrDefault();
 
             if (schoolCode == null)
             {
                 throw new Exception("The school code entered does not exist.");
             }
+
+            //var registeredStudents = _context.Candidates.FromSql(
+            //    $"SELECT COUNT(*) FROM Schools s INNER JOIN Candidates c ON s.SchoolId WHERE s.SchoolCode = @schoolCode")
+            //    .FirstOrDefault();
 
             string sqlQuery = "SELECT COUNT(*) FROM Schools s INNER JOIN Candidates c on s.SchoolId = c.SchoolId WHERE SchoolCode = @schoolCode";
             var registeredStudents = (from s in _context.Schools
@@ -67,10 +64,8 @@ namespace DemoProject.Services.Implementation
 
         public School GetSchoolByCode(string schoolCode)
         {
-            string sqlQuery = "SELECT TOP 1 * FROM Schools WHERE SchoolCode = @SchoolCode";
-
-            var school = _context.Schools
-                .FromSqlRaw(sqlQuery, new SqlParameter("@SchoolCode", schoolCode))
+            var school = _context.Schools.FromSql(
+                $"SELECT TOP 1 * FROM Schools WHERE SchoolCode = {schoolCode}")
                 .FirstOrDefault();
 
             return school;
@@ -138,12 +133,11 @@ namespace DemoProject.Services.Implementation
 
         private Candidate GetCandidateById(int candidateId)
         {
-            string sqlQuery = "SELECT * FROM Candidates WHERE CandidateId = @CandidateId";
-            var candidateIdParam = new SqlParameter("@CandidateId", candidateId);
 
-            var candidate = _context.Candidates
-                .FromSqlRaw(sqlQuery, candidateIdParam)
+            var candidate = _context.Candidates.FromSql(
+                $"SELECT * FROM Candidates WHERE CandidateId = {candidateId}")
                 .FirstOrDefault();
+            
             return candidate;
 
         }
@@ -157,9 +151,10 @@ namespace DemoProject.Services.Implementation
 
         public List<OnboardedCandidatesViewModel> GetOnboardedCandidates(string schoolCode, string schoolName)
         {
-            var candidates = _context.Candidates
-                .Where(c => c.School.SchoolCode == schoolCode)
-                .Where(c => c.School.Name == schoolName)
+
+            var candidates = _context.Candidates.FromSql(
+                $"SELECT * FROM Candidates WHERE SchoolId IN (SELECT SchoolId FROM Schools WHERE SchoolCode = {schoolCode}) AND SchoolId IN (SELECT SchoolId FROM Schools WHERE Name = {schoolName})"
+                )
                 .Select(c => new OnboardedCandidatesViewModel
                 {
                     CandidateId = c.CandidateId,

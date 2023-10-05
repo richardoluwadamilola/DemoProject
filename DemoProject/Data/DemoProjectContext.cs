@@ -5,13 +5,16 @@ namespace DemoProject.Data
 {
     public class DemoProjectContext : DbContext
     {
+        public DemoProjectContext()
+        {
+        }
+
         public DemoProjectContext(DbContextOptions options) : base(options)
         {
         }
 
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<School> Schools { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
