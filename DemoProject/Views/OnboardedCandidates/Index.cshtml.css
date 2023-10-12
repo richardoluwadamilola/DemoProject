@@ -17,3 +17,22 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
+body {
+    font-family: sans-serif;
+    font-size: 1rem;
+    background-color: #0000FF; /* Blue background color */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Allow vertical alignment */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    min-height: 100vh;
+}
+.text-center h1 {
+    font-weight: 700;
+}
+label {
+    font-weight: bold;
+}

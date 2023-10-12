@@ -70,25 +70,25 @@ body {
     cursor: pointer;
 }
 
-    .enter-button:hover {
+.enter-button:hover {
         background-color: #0056b3; /* Darker blue on hover */
     }
 
 /* Media query for screens smaller than 768px (e.g., tablets and phones) */
 @media (max-width: 768px) {
-    .container {
+.container {
         padding: 10px;
     }
 
-    .form-label {
+.form-label {
         font-size: 1em;
     }
 
-    .form-control {
+.form-control {
         padding: 8px;
     }
 
-    .enter-button {
+.enter-button {
         font-size: 0.9em;
     }
 }

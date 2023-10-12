@@ -6,42 +6,73 @@
 <html>
 <head>
     <title>Onboarded Candidates</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    @foreach (var schoolCode in Model.Keys)
-{
-    foreach (var schoolName in Model[schoolCode].Keys)
-    {
-        <h2>School Code: @schoolCode</h2>
-        <h3>School Name: @schoolName</h3>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Serial Number</th>
-                    <th>Candidate ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    var serialNumber = 1; // Initialize the serial number
-                }
-                @foreach (var candidate in Model[schoolCode][schoolName])
-                {
+    <div class="container">
+        <div class="text-center">
+            <h1><a href="@Url.Action("Index", "Home")" class="btn btn-link">Gameplay</a></h1>
+        </div>
+
+        <!-- Add a form for the school code search -->
+        <form id="searchForm">
+            <label for="schoolCodeInput">Search by School Code:</label>
+            <input type="text" id="schoolCodeInput" />
+            <button type="button" onclick="searchCandidates()">Search</button>
+        </form>
+
+        <div id="candidatesTable" style="display: none;">
+            <table class="table table-bordered table-striped">
+                <thead>
                     <tr>
-                        <td>@serialNumber</td>
-                        <td>@candidate.CandidateId</td>
-                        <td>@candidate.FirstName</td>
-                        <td>@candidate.LastName</td>
+                        <th>Serial Number</th>
+                        <th>Candidate ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                     </tr>
-                    {
-                        serialNumber++; // Increment the serial number for the next row
+                </thead>
+                <tbody id="candidatesBody">
+                    @{
+                        var serialNumber = 1; // Initialize the serial number
                     }
+                    @foreach (var schoolCode in Model.Keys)
+                    {
+                        foreach (var schoolName in Model[schoolCode].Keys)
+                        {
+                            foreach (var candidate in Model[schoolCode][schoolName])
+                            {
+                                <tr data-schoolcode="@schoolCode" class="candidateRow">
+                                    <td>@serialNumber</td>
+                                    <td>@candidate.CandidateId</td>
+                                    <td>@candidate.FirstName</td>
+                                    <td>@candidate.LastName</td>
+                                </tr>
+                                {
+                                    serialNumber++; // Increment the serial number for the next row
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function searchCandidates() {
+            var schoolCode = document.getElementById("schoolCodeInput").value;
+            var candidatesRows = document.querySelectorAll(".candidateRow");
+
+            candidatesRows.forEach(function (row) {
+                var rowSchoolCode = row.getAttribute("data-schoolcode");
+                if (rowSchoolCode === schoolCode || schoolCode.trim() === "") {
+                    document.getElementById("candidatesTable").style.display = "table";
+                    row.style.display = "table-row";
+                } else {
+                    row.style.display = "none";
                 }
-            </tbody>
-        </table>
-    }
-}
+            });
+        }
+    </script>
 </body>
 </html>

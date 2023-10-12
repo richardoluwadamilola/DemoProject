@@ -3,13 +3,21 @@
 }
 <body class="body bg-primary">
     <div class="text-center">
-    <h1>Gameplay</h1>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-link" style="font-weight: 700; color: #FFFFFF;">Gameplay</a>
 </div>
     <div class="container">
         <form id="schoolCodeForm" method="post" action="Home/SubmitCode" class="school-code-form">
         <div class="form-group">
-            <label for="schoolCode" class="form-label">Enter School Code to register Candidates:</label>
-            <input type="text" class="form-control" id="schoolCode" name="schoolCode" required />
+            <label for="schoolCode" class="form-label">Select School Code to register Candidates:</label>
+                <select class="form-control" id="schoolCode" name="schoolCode" required>
+                    <option value=""></option>
+                    <option value="123TSN">123TSN</option>
+                    <option value="456APS">456APS</option>
+                    <option value="456APT">456APT</option>
+                    <option value="456AMS">456AMS</option>
+                    <option value="456JTS">456JTS</option>
+                </select>
+
         </div>
         <button type="button" id="submitButton" class="btn btn-primary">Enter</button>
     </form>
