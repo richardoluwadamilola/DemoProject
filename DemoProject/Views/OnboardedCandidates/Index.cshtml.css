@@ -30,9 +30,19 @@ body {
     justify-content: center; /* Center vertically */
     min-height: 100vh;
 }
-.text-center h1 {
-    font-weight: 700;
-}
 label {
     font-weight: bold;
+}
+.text-center {
+    text-align: center;
+    font-family: 'Grandstander';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 32px;
+    /* identical to box height, or 80% */
+    letter-spacing: -0.165px;
+    color: #FFFFFF;
+    margin-bottom: 40px; /* Add more space below "Gameplay" */
+    margin-top: 80px; /* Adjust the margin to bring "Gameplay" down */
 }

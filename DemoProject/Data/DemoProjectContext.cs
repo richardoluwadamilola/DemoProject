@@ -52,6 +52,12 @@ namespace DemoProject.Data
                     SchoolId = 5,
                     Name = "JT Mentoring School",
                     SchoolCode = "456JTS"
+                },
+                new School
+                {
+                    SchoolId = 6,
+                    Name = "MaryAmaka International School",
+                    SchoolCode = "607MAI"
                 }
                 );
         }

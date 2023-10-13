@@ -42,11 +42,6 @@ namespace DemoProject.Services.Implementation
             {
                 throw new Exception("The school code entered does not exist.");
             }
-
-            //var registeredStudents = _context.Candidates.FromSql(
-            //    $"SELECT COUNT(*) FROM Schools s INNER JOIN Candidates c ON s.SchoolId WHERE s.SchoolCode = @schoolCode")
-            //    .FirstOrDefault();
-
             string sqlQuery = "SELECT COUNT(*) FROM Schools s INNER JOIN Candidates c on s.SchoolId = c.SchoolId WHERE SchoolCode = @schoolCode";
             var registeredStudents = (from s in _context.Schools
                                       where s.SchoolCode == schoolCode.SchoolCode
