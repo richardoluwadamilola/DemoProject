@@ -16,7 +16,7 @@
         <!-- Add a form for the school code search -->
         <form id="searchForm">
             <label for="schoolCodeInput">Search by School Code:</label>
-            <input type="text" id="schoolCodeInput" />
+            <input type="text" id="schoolCodeInput" onkeyup="checkEnter(event)"/>
             <button type="button" onclick="searchCandidates()">Search</button>
         </form>
 
@@ -57,21 +57,35 @@
         </div>
     </div>
 
+    <!-- Add this script at the bottom of your page -->
     <script>
+        document.getElementById("searchForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent the form from submitting
+        });
+
+        function checkEnter(e) {
+            if (e.key === "Enter") {
+                searchCandidates();
+            }
+        }
+
         function searchCandidates() {
             var schoolCode = document.getElementById("schoolCodeInput").value;
             var candidatesRows = document.querySelectorAll(".candidateRow");
+
+            candidatesRows.forEach(function (row) {
+                row.style.display = "none";
+            });
 
             candidatesRows.forEach(function (row) {
                 var rowSchoolCode = row.getAttribute("data-schoolcode");
                 if (rowSchoolCode === schoolCode || schoolCode.trim() === "") {
                     document.getElementById("candidatesTable").style.display = "table";
                     row.style.display = "table-row";
-                } else {
-                    row.style.display = "none";
                 }
             });
         }
     </script>
+
 </body>
 </html>

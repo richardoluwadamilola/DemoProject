@@ -89,8 +89,8 @@ namespace DemoProject.Services.Implementation
 
             // Build the SQL query with parameters
             string insertCandidateQuery =
-                "INSERT INTO Candidates (FirstName, MiddleName, LastName, DOB, Gender, Category, SchoolId, Passport, PassportExtension) " +
-                "VALUES (@FirstName, @MiddleName, @LastName, @DOB, @Gender, @Category, @SchoolId, @Passport, @PassportExtension)";
+                "INSERT INTO Candidates (FirstName, MiddleName, LastName, DOB, Gender, Category, SchoolId, Email, Passport, PassportExtension) " +
+                "VALUES (@FirstName, @MiddleName, @LastName, @DOB, @Gender, @Category, @SchoolId, @Email, @Passport, @PassportExtension)";
 
             // Create parameters for the query
             var parameters = new List<SqlParameter>
@@ -102,6 +102,7 @@ namespace DemoProject.Services.Implementation
         new SqlParameter("@Gender", candidateViewModel.Gender),
         new SqlParameter("@Category", candidateViewModel.Category),
         new SqlParameter("@SchoolId", schoolId),
+        new SqlParameter("@Email", candidateViewModel.Email),
         new SqlParameter("@Passport", SqlDbType.VarBinary) { Value = passport },
         new SqlParameter("@PassportExtension", extension) // Use extension here
     };

@@ -7,6 +7,7 @@
         public string? LastName { get; set; }
         public string? SchoolCode { get; set; }
         public string? SchoolName { get; set; }
+        
     }
 
 
