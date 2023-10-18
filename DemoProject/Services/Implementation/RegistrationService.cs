@@ -139,7 +139,7 @@ namespace DemoProject.Services.Implementation
 
         public string GenerateCandidateID(int candidateId)
         {
-            string candidateIdString = candidateId.ToString().PadLeft(3, '0');
+            string candidateIdString = candidateId.ToString("D3");
             string uniqueID = $"CP{candidateIdString}";
             return uniqueID;
         }

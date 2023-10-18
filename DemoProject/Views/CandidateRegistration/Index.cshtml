@@ -23,7 +23,7 @@
                 <input type="text" class="form-control" id="MiddleName" name="MiddleName" />
             </div>
 
-            <div class="form-group">
+            <div class "form-group">
                 <label for="LastName" class="form-label">Last Name:</label>
                 <input type="text" class="form-control" id="Surname" name="Surname" required />
             </div>
@@ -46,6 +46,11 @@
             </div>
 
             <div class="form-group">
+                <label for="Email" class="form-label">Email:</label>
+                <input type="text" class="form-control" id="Email" name="Email" required />
+            </div>
+
+            <div class="form-group">
                 <label class="form-label">Category:</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="Category" id="Junior" value="Junior" required />
@@ -53,29 +58,37 @@
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="Category" id="Senior" value="Senior" required />
-                    <label class="form-check-label" for="Senior">Senior</label>
+                    <label class="form-check-label" for "Senior" > Senior < /label>
                 </div>
                 <!-- Add more categories as needed -->
             </div>
 
             <div class="form-group">
-                <label for="Passport" class="form-label">Passport Photo:</label>
-                <input type="file" class="form-control-file" id="Passport" name="Passport" accept=".jpg, .jpeg, .png" required />
+                <label for="Passport" class="form-label" > Passport Photo: < /label>
+                <input type="file" class="form-control-file" id="Passport" name="Passport" accept = ".jpg, .jpeg, .png" required / >
             </div>
-
-            <button type="button" id="nextButton" class="btn btn-primary">Next</button>
+            <button type = "button" id = "nextButton" class = "btn btn-primary">Next</button>
         </form>
     </div>
 
     <script>
-        document.getElementById("nextButton").addEventListener("click", function () {
+        // JavaScript code for email validation
+        var emailPattern = /^[a-zA-Z0-9._-]+[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        document.getElementById("Email").addEventListener("blur", function() {
+            var email = this.value;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                this.value = ""; // Clear the input
+            }
+        });
+
+        document.getElementById("nextButton").addEventListener("click", function() {
             // Your logic to validate the form and navigate to the next step
 
             // For example, submit the form if it's valid
             var form = document.getElementById("registrationForm");
-                form.submit();
-            //}
+            form.submit();
         });
     </script>
-
 </body>
