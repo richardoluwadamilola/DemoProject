@@ -2,6 +2,13 @@
 @{
     ViewData["Title"] = "Candidate Registration";
 }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+</head>
 <body class="body bg-primary">
     <div class="text-center">
         <a href="@Url.Action("Index", "Home")" class="btn btn-link" style="font-weight: 700; color: #FFFFFF;">Gameplay</a>
@@ -10,81 +17,103 @@
     <div class="container">
         <h1>Fill in your details to register</h1>
         <form id="registrationForm" method="post" action="CandidateRegistration/RegisterCandidate" class="registration-form" enctype="multipart/form-data">
-            <input type="text" class="form-control" id="SchoolCode" name="SchoolCode" value="@Model.SchoolCode" hidden required/>
-            <input type="text" class="form-control" id="SchoolId" name="SchoolId" value="@Model.SchoolId" hidden required/>
-            <input type="text" class="form-control" id="SchoolName" name="SchoolName" value="@Model.Name" hidden required/>
+            <input type="text" class="form-control" id="SchoolCode" name="SchoolCode" value="@Model.SchoolCode" hidden required />
+            <input type="text" class="form-control" id="SchoolId" name="SchoolId" value="@Model.SchoolId" hidden required />
+            <input type="text" class="form-control" id="SchoolName" name="SchoolName" value="@Model.Name" hidden required />
             <div class="form-group">
                 <label for="FirstName" class="form-label">First Name:</label>
-                <input type="text" class="form-control" id="FirstName" name="FirstName" required/>
+                <input type="text" class="form-control" id="FirstName" name="FirstName" required />
             </div>
 
             <div class="form-group">
                 <label for="MiddleName" class="form-label">Middle Name:</label>
-                <input type="text" class="form-control" id="MiddleName" name="MiddleName"/>
+                <input type="text" class="form-control" id="MiddleName" name="MiddleName" />
             </div>
 
-            <div class "form-group">
+            <div class="form-group">
                 <label for="LastName" class="form-label">Last Name:</label>
-                <input type="text" class="form-control" id="Surname" name="Surname" required/>
+                <input type="text" class="form-control" id="Surname" name="Surname" required />
             </div>
 
             <div class="form-group">
                 <label class="form-label">Gender:</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="Gender" id="MaleGender" value="Male" required/>
+                    <input class="form-check-input" type="radio" name="Gender" id="MaleGender" value="Male" required />
                     <label class="form-check-label" for="MaleGender">Male</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="Gender" id="FemaleGender" value="Female" required/>
+                    <input class="form-check-input" type="radio" name="Gender" id="FemaleGender" value="Female" required />
                     <label class="form-check-label" for="FemaleGender">Female</label>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="DOB" class="form-label">Date of Birth:</label>
-                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required/>
+                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required />
             </div>
 
             <div class="form-group">
                 <label for="Email" class="form-label">Email:</label>
-                <input type="text" class="form-control" id="Email" name="Email" required/>
+                <input type="email" class="form-control" id="Email" name="Email" required />
+                <span id="emailError" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Category:</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="Category" id="Junior" value="Junior" required/>
+                    <input class="form-check-input" type="radio" name="Category" id="Junior" value="Junior" required />
                     <label class="form-check-label" for="Junior">Junior</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="Category" id="Senior" value="Senior" required/>
-                    <label class="form-check-label" for "Senior">Senior</label>
+                    <input class="form-check-input" type="radio" name="Category" id="Senior" value="Senior" required />
+                    <label class="form-check-label" for="Senior">Senior</label>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="Passport" class="form-label" > Passport Photo:</label>
-                <input type="file" class="form-control-file" id="Passport" name="Passport" accept = ".jpg, .jpeg, .png" required/>
+                <label for="Passport" class="form-label"> Passport Photo:</label>
+                <input type="file" class="form-control-file" id="Passport" name="Passport" accept=".jpg, .jpeg, .png" required />
             </div>
-            <button type = "button" id = "nextButton" class = "btn btn-primary">Next</button>
+            <button type="button" id="nextButton" class="btn btn-primary">Next</button>
         </form>
     </div>
 
     <script>
         document.getElementById("Email").addEventListener("blur", function () {
-        var email = this.value;
-        var emailPattern = /^[a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        if (!emailPattern.test(email)) {
-            alert("Please enter a valid email address.");
-            this.value = ""; // Clear the input
-        }
-    });
+            var email = this.value;
+            var emailPattern = /^[a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            var errorMessage = document.getElementById("emailError");
+
+            if (!emailPattern.test(email)) {
+                errorMessage.textContent = "Please enter a valid email address.";
+                this.classList.add("is-invalid");
+            } else {
+                errorMessage.textContent = ""; // Clear the error message
+                this.classList.remove("is-invalid");
+            }
+        });
 
         document.getElementById("nextButton").addEventListener("click", function() {
-       
-            // submit the form if it's valid
-            var form = document.getElementById("registrationForm");
-            form.submit();
+            // Check if there are any validation errors
+            var emailInput = document.getElementById("Email");
+            var errorMessage = document.getElementById("emailError");
+
+            if (emailInput.classList.contains("is-invalid")) {
+                alert("Please fix validation errors before proceeding.");
+                emailInput.focus();
+            } else {
+                // Submit the form if it's valid
+                var form = document.getElementById("registrationForm");
+                form.submit();
+            }
+        });
+
+        // Add event listener to capture "Enter" key press
+        document.getElementById("Email").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                document.getElementById("nextButton").click();
+            }
         });
     </script>
 </body>
+</html>

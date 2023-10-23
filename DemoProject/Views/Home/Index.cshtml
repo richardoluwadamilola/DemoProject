@@ -11,7 +11,7 @@
             <div class="form-group">
                 <label for="schoolCode" class="form-label">Select School Code to register Candidates:</label>
                 <select class="form-control" id="schoolCode" name="schoolCode" required>
-                    <option value="">Select your schoolcode</option>
+                    <option value="">Select your school code</option>
                 </select>
             </div>
             <button type="button" id="submitButton" class="btn btn-primary">Enter</button>
@@ -26,7 +26,6 @@
     <script>
         document.getElementById("submitButton").addEventListener("click", function () {
             var schoolCode = document.getElementById("schoolCode").value;
-            var registeredStudents = 10;
 
             if (schoolCode.trim() === "") {
                 alert("Please enter a school code.");
@@ -34,6 +33,17 @@
                 document.getElementById("schoolCodeForm").submit();
             }
         });
+
+        // Function to handle the "Enter" key press
+        function handleEnterKey(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission on "Enter" key press
+                document.getElementById("submitButton").click(); // Trigger the "Enter" button click event
+            }
+        }
+
+        // Add a keydown event listener to the select element
+        document.getElementById("schoolCode").addEventListener("keydown", handleEnterKey);
 
         // Fetch school codes from the API
         // Function to fetch and populate school codes
@@ -65,3 +75,4 @@
         }
     </script>
 </body>
+</html>
